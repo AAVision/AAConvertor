@@ -6,5 +6,4 @@ This project was created since 2018, Simple C# GUI MP4 => MP3 convertor
 ![alt text](https://github.com/AAVision/Mp4toMp3/blob/master/demo/GUI.PNG?raw=true)
 
 
-### Hint
-#### :warning: You should run the exe as an administrator :warning:
+### :warning: You should run the exe as an administrator :warning:
