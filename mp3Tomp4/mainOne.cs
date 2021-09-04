@@ -98,7 +98,7 @@ namespace mp3Tomp4
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            //call thread
             mainThread = new Thread(process);
             mainThread.Start();
             SaveButton.Enabled = false;
