@@ -70,6 +70,7 @@ namespace mp3Tomp4
                 try
                 {
                     convert.ConvertMedia(txtPathVideo.Text.Trim(), txtSaveTo.Text.Trim(), "mp3");
+                    MessageBox.Show("Converted successfully!");
                 }
                 catch (NReco.VideoConverter.FFMpegException ee) { }
                 
