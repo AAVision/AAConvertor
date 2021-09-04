@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace mp3Tomp4
 {
@@ -14,7 +15,7 @@ namespace mp3Tomp4
     public partial class mainOne : Form
     {
         int mov, movX, movY;
-
+        Thread mainThread;
         string videoPath, videoName, musicPath, musicName;
         public mainOne()
         {
@@ -62,7 +63,9 @@ namespace mp3Tomp4
             txtSaveTo.Text = musicPath;
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        
+
+        private void process()
         {
             //Save button check if 2 inputs are not empty
             if (!txtPathVideo.Text.Trim().Equals("") || txtSaveTo.Text.Trim().Equals(""))
@@ -74,16 +77,32 @@ namespace mp3Tomp4
                 {
                     convert.ConvertMedia(txtPathVideo.Text.Trim(), txtSaveTo.Text.Trim(), "mp3");
                     MessageBox.Show("Converted successfully!");
+                    this.Invoke(new MethodInvoker(delegate ()
+                    {
+                        SaveButton.Enabled = true;
+                    }));
+                    
                 }
-                catch (NReco.VideoConverter.FFMpegException ee) {
+                catch (NReco.VideoConverter.FFMpegException ee)
+                {
                     MessageBox.Show("Error in processing!");
                 }
-                
+
             }
             else
             {
                 MessageBox.Show("Empty Inputs");
             }
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+            mainThread = new Thread(process);
+            mainThread.Start();
+            SaveButton.Enabled = false;
+
         }
 
         private void button5_MouseMove(object sender, MouseEventArgs e)
