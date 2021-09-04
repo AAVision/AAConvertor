@@ -25,6 +25,7 @@ namespace mp3Tomp4
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //QUIT Question
             DialogResult dr = MessageBox.Show("Are you sure you want to QUIT?", "Leaving App", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.No)
             {
@@ -38,6 +39,7 @@ namespace mp3Tomp4
 
         private void buttonOpen_Click(object sender, EventArgs e)
         {
+            //SELECT MP4 file.
             OpenFileDialog ofd = new OpenFileDialog() { Multiselect=false,Filter="MP4 File|*.mp4" };
             if (ofd.ShowDialog()==DialogResult.OK)
             {
@@ -49,6 +51,7 @@ namespace mp3Tomp4
 
         private void button4_Click(object sender, EventArgs e)
         {
+            //CHOOSE the path of the saved MP3
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == DialogResult.OK)
             {
@@ -61,18 +64,20 @@ namespace mp3Tomp4
 
         private void button5_Click(object sender, EventArgs e)
         {
-
+            //Save button check if 2 inputs are not empty
             if (!txtPathVideo.Text.Trim().Equals("") || txtSaveTo.Text.Trim().Equals(""))
             {
 
-
+                //Use FFMpeg to convert from MP4 to MP3
                 var convert = new NReco.VideoConverter.FFMpegConverter();
                 try
                 {
                     convert.ConvertMedia(txtPathVideo.Text.Trim(), txtSaveTo.Text.Trim(), "mp3");
                     MessageBox.Show("Converted successfully!");
                 }
-                catch (NReco.VideoConverter.FFMpegException ee) { }
+                catch (NReco.VideoConverter.FFMpegException ee) {
+                    MessageBox.Show("Error in processing!");
+                }
                 
             }
             else
@@ -91,18 +96,20 @@ namespace mp3Tomp4
             this.SaveButton.BackColor = Color.Silver;
         }
 
+        //GUI movement and position
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
             mov = 1;
             movX = e.X;
             movY = e.Y;
         }
-
+        //Minimize
         private void button2_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
+        //Minimize and Maximize button
         private void button3_Click(object sender, EventArgs e)
         {
             if (WindowState == FormWindowState.Normal)
@@ -113,7 +120,7 @@ namespace mp3Tomp4
                 this.WindowState = FormWindowState.Normal;
             }
         }
-
+        //GUI movement and position
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
             if (mov == 1)
@@ -121,7 +128,7 @@ namespace mp3Tomp4
                 this.SetDesktopLocation(MousePosition.X - movX, MousePosition.Y - movY);
             }
         }
-
+        //GUI movement and position
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
             mov = 0;
